@@ -40,7 +40,7 @@ const formSchema = z.object({
   reward: z.number(),
 });
 
-const CreateChore = () => {
+const AddChild = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -179,4 +179,4 @@ const CreateChore = () => {
   );
 };
 
-export default CreateChore;
+export default AddChild;

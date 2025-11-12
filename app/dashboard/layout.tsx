@@ -3,6 +3,7 @@ import { AuthButton } from "@/components/auth-button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function ProtectedLayout({
   children,
@@ -37,6 +38,7 @@ export default function ProtectedLayout({
             </a>
           </p>
           <ThemeSwitcher />
+          <Toaster />
         </footer>
       </div>
     </main>
