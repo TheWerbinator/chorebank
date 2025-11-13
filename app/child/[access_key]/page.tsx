@@ -7,7 +7,7 @@ import ChildDashboardClient from "../../../components/child-dashboard";
 // It uses the SERVICE_ROLE key to bypass RLS, as the child is not logged in.
 const serviceClient = createClient(
   process.env.SUPABASE_URL!, // Use SUPABASE_URL, not NEXT_PUBLIC_...
-  process.env.SUPABASE_SERVICE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 const ChildDashboardPage = async ({
