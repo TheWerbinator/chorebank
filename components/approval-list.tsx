@@ -2,7 +2,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { approveChore, rejectChore } from "./actions"; // Import the actions
+import { approveChore, rejectChore } from "@/lib/parent_actions"; // Import the actions
 import { InfoIcon } from "lucide-react";
 import {
   Card,

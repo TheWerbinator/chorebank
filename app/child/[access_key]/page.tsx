@@ -1,7 +1,7 @@
 // app/child/[access_key]/page.tsx
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
-import ChildDashboardClient from "./child-dashboard";
+import ChildDashboardClient from "../../../components/child-dashboard";
 
 // This is a server-only Supabase client.
 // It uses the SERVICE_ROLE key to bypass RLS, as the child is not logged in.
