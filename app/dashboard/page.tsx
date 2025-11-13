@@ -18,7 +18,7 @@ export default async function ProtectedPage() {
 
   const { data, error: childrenError } = await supabase
     .from("children")
-    .select("id, name, current_rewards, lifetime_rewards");
+    .select("id, name, current_rewards, lifetime_rewards, access_key");
   if (childrenError) {
     console.error("Error fetching children:", childrenError);
     return (
