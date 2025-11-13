@@ -6,7 +6,7 @@ import ChildDashboardClient from "../../../components/child-dashboard";
 // This is a server-only Supabase client.
 // It uses the SERVICE_ROLE key to bypass RLS, as the child is not logged in.
 const serviceClient = createClient(
-  process.env.SUPABASE_URL!, // Use SUPABASE_URL, not NEXT_PUBLIC_...
+  process.env.NEXT_PUBLIC_SUPABASE_URL!, // Use SUPABASE_URL, not NEXT_PUBLIC_...
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
