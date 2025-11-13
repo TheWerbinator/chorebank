@@ -1,7 +1,7 @@
 // app/child/[access_key]/page.tsx
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
-import ChildDashboardClient from "./child-dashboard"; // We'll create this next
+import ChildDashboardClient from "./child-dashboard";
 
 // This is a server-only Supabase client.
 // It uses the SERVICE_ROLE key to bypass RLS, as the child is not logged in.
@@ -33,17 +33,24 @@ const ChildDashboardPage = async ({
     notFound(); // Triggers the 404 page
   }
 
-  const { data: chores } = await serviceClient
+  const { data: choresToDo } = await serviceClient
     .from("chores")
     .select("*")
     .eq("assigned_child", child.id)
-    .eq("isComplete", false);
+    .in("status", ["assigned", "rejected"]);
+
+  const { data: choresPending } = await serviceClient
+    .from("chores")
+    .select("*")
+    .eq("assigned_child", child.id)
+    .eq("status", "pending_approval");
 
   return (
     <div className='w-3/4 flex flex-col mx-auto gap-12'>
       <ChildDashboardClient
         child={child}
-        chores={chores || []}
+        choresToDo={choresToDo || []}
+        choresPending={choresPending || []}
         access_key={access_key}
       />
     </div>

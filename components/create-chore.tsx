@@ -71,7 +71,6 @@ const CreateChore = ({
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log("Submitting data:", { ...data, userId });
     setLoading(true);
     const { data: supabaseData, error } = await supabase
       .from("chores")
@@ -84,7 +83,7 @@ const CreateChore = ({
       })
       .select();
     if (error) {
-      console.log(supabaseData, error);
+      console.error(supabaseData, error);
       toast("Failed to create child", {
         description: error.message,
         position: "bottom-right",

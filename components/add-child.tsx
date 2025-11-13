@@ -50,7 +50,7 @@ const AddChild = ({ userId }: { userId: string }) => {
       })
       .select();
     if (error) {
-      console.log(supabaseData, error);
+      console.error(supabaseData, error);
       toast("Failed to create child", {
         description: error.message,
         position: "bottom-right",

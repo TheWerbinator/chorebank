@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
-
 import { createClient } from "@/lib/supabase/server";
 import { InfoIcon, MessageCircleWarningIcon } from "lucide-react";
-// import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
 import CreateChore from "@/components/create-chore";
 import AddChild from "@/components/add-child";
 import Children from "@/components/children";
+import ApprovalList from "@/components/approval-list";
+// import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -19,7 +19,11 @@ export default async function ProtectedPage() {
   const { data, error: childrenError } = await supabase
     .from("children")
     .select("id, name, current_rewards, lifetime_rewards, access_key");
-  if (childrenError) {
+  const { data: pendingChores, error: pendingChoresError } = await supabase
+    .from("chores")
+    .select("id, title, description, reward, assigned_child ( name )") // Also get child's name!
+    .eq("status", "pending_approval");
+  if (childrenError || pendingChoresError) {
     console.error("Error fetching children:", childrenError);
     return (
       <div className='w-full flex flex-col gap-12'>
@@ -47,6 +51,21 @@ export default async function ProtectedPage() {
           <h2 className='font-bold text-lg mb-4'>Children</h2>
           <Children childrenData={data} />
         </div>
+        <ApprovalList
+          userId={claimsData.claims.sub}
+          chores={(pendingChores ?? []).map((chore) => {
+            const assigned = Array.isArray(chore.assigned_child)
+              ? chore.assigned_child[0]?.name
+              : (chore.assigned_child as { name: string })?.name;
+            return {
+              id: chore.id,
+              title: chore.title,
+              description: chore.description,
+              reward: chore.reward,
+              assigned_child: assigned,
+            };
+          })}
+        />
         <div className='flex flex-col'>
           <h2 className='font-bold text-lg mb-4'>Actions</h2>
           <div className='flex flex-wrap gap-4'>
@@ -54,12 +73,12 @@ export default async function ProtectedPage() {
             <AddChild userId={claimsData.claims.sub} />
           </div>
         </div>
-        <div className='flex flex-col gap-2 items-start w-full'>
+        {/* <div className='flex flex-col gap-2 items-start w-full'>
           <h2 className='font-bold text-2xl mb-4'>Your user details</h2>
           <pre className='text-xs font-mono p-3 rounded border max-h-32 overflow-auto w-full'>
             {JSON.stringify(claimsData.claims, null, 2)}
           </pre>
-        </div>
+        </div> */}
         {/* <div>
         <h2 className='font-bold text-2xl mb-4'>Next steps</h2>
         <FetchDataSteps />
