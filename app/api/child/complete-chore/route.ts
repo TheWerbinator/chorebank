@@ -2,7 +2,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-// Again, use the service-role client
 const serviceClient = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_KEY!
@@ -29,8 +28,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid access key" }, { status: 401 });
   }
 
-  // 2. Update the chore, BUT only if it belongs to this child
-  // This match ({ id: chore_id, child_id: child.id }) is the critical security check.
+  // 2. Mark the chore as complete if it belongs to the child
   const { error } = await serviceClient
     .from("chores")
     .update({ isComplete: true })

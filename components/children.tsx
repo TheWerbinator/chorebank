@@ -35,8 +35,9 @@ const Children = ({
             <div className='flex gap-2 items-center w-fit my-2 p-2 rounded-xl border'>
               <p className='text-sm'>Copy Access Link</p>
               <CopyButton
-                content={`localhost:3000/child/${child.access_key}`}
-                // content={`https://chorebank.vercel.app/child/${child.access_key}`}
+                //! For local development, uncomment the line below and comment out the vercel.app line
+                // content={`localhost:3000/child/${child.access_key}`}
+                content={`https://chorebank.vercel.app/child/${child.access_key}`}
                 size='sm'
               />
             </div>

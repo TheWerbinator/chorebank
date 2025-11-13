@@ -43,7 +43,7 @@ const ChildDashboardClient = ({
         reward: reward,
       }),
     });
-    // Refresh the page data
+
     window.location.reload();
   };
 

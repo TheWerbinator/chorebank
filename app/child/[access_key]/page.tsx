@@ -5,13 +5,11 @@ import ChildDashboardClient from "./child-dashboard"; // We'll create this next
 
 // This is a server-only Supabase client.
 // It uses the SERVICE_ROLE key to bypass RLS, as the child is not logged in.
-// Ensure these .env variables are NOT prefixed with NEXT_PUBLIC_
 const serviceClient = createClient(
   process.env.SUPABASE_URL!, // Use SUPABASE_URL, not NEXT_PUBLIC_...
   process.env.SUPABASE_SERVICE_KEY!
 );
 
-// This is the main page component
 const ChildDashboardPage = async ({
   params,
 }: {
@@ -24,7 +22,6 @@ const ChildDashboardPage = async ({
     notFound(); // Triggers the 404 page
   }
 
-  // 1. Find the child by the access key
   const { data: child } = await serviceClient
     .from("children")
     .select("id, name, current_rewards, lifetime_rewards, parent")
@@ -36,14 +33,12 @@ const ChildDashboardPage = async ({
     notFound(); // Triggers the 404 page
   }
 
-  // 2. Fetch their chores
   const { data: chores } = await serviceClient
     .from("chores")
     .select("*")
     .eq("assigned_child", child.id)
     .eq("isComplete", false);
 
-  // 4. Pass all data to a Client Component for interactivity
   return (
     <div className='w-3/4 flex flex-col mx-auto gap-12'>
       <ChildDashboardClient
