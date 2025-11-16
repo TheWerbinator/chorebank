@@ -43,10 +43,36 @@ export default async function ProtectedPage() {
   return (
     <div className="w-3/4 flex flex-col mx-auto gap-12">
       {/* Info */}
-      <div className="w-full">
+      <div className="w-full flex items-center justify-between">
         <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
           <InfoIcon size={16} strokeWidth={2} />
           This is a protected page that you can only see as an authenticated user
+        </div>
+
+        {/* Hidden checkbox for CreateChore modal */}
+        <input type="checkbox" id="createChoreModalToggle" className="hidden peer" />
+        {/* Button triggers modal */}
+        <label
+          htmlFor="createChoreModalToggle"
+          className="bg-purple-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-600 transition"
+        >
+          Create Chore
+        </label>
+
+        {/* Modal */}
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 relative">
+            {/* Close button */}
+            <label
+              htmlFor="createChoreModalToggle"
+              className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-900 text-xl"
+            >
+              ✕
+            </label>
+
+            {/* CreateChore component */}
+            <CreateChore userId={claimsData.claims.sub} childrenData={data} />
+          </div>
         </div>
       </div>
 
@@ -55,9 +81,8 @@ export default async function ProtectedPage() {
         <div className="flex items-center gap-2">
           <h2 className="font-bold text-lg mb-4">Children</h2>
 
-          {/* Hidden checkbox to toggle modal */}
+          {/* Hidden checkbox for AddChild modal */}
           <input type="checkbox" id="addChildModalToggle" className="hidden peer" />
-
           {/* Plus icon label triggers modal */}
           <label
             htmlFor="addChildModalToggle"
@@ -102,14 +127,6 @@ export default async function ProtectedPage() {
           };
         })}
       />
-
-      {/* Actions Section */}
-      <div className="flex flex-col">
-        <h2 className="font-bold text-lg mb-4">Actions</h2>
-        <div className="flex flex-wrap gap-4">
-          <CreateChore userId={claimsData.claims.sub} childrenData={data} />
-        </div>
-      </div>
     </div>
   );
 }
