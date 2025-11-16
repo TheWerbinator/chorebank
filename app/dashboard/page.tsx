@@ -12,9 +12,7 @@ export default async function ProtectedPage() {
 
   const { data: claimsData, error: claimsError } =
     await supabase.auth.getClaims();
-  if (claimsError || !claimsData) {
-    redirect("/auth/login");
-  }
+  if (claimsError || !claimsData) redirect("/auth/login");
 
   const { data, error: childrenError } = await supabase
     .from("children")
@@ -41,17 +39,16 @@ export default async function ProtectedPage() {
   }
 
   return (
-    <div className="w-3/4 flex flex-col mx-auto gap-12">
-      {/* Info */}
-      <div className="w-full flex items-center justify-between">
-        <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
+    <div className="w-11/12 md:w-3/4 flex flex-col mx-auto gap-12">
+      {/* Info + Create Chore */}
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center flex-1">
           <InfoIcon size={16} strokeWidth={2} />
           This is a protected page that you can only see as an authenticated user
         </div>
 
-        {/* Hidden checkbox for CreateChore modal */}
+        {/* CreateChore Modal */}
         <input type="checkbox" id="createChoreModalToggle" className="hidden peer" />
-        {/* Button triggers modal */}
         <label
           htmlFor="createChoreModalToggle"
           className="bg-purple-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-600 transition"
@@ -59,9 +56,8 @@ export default async function ProtectedPage() {
           Create Chore
         </label>
 
-        {/* Modal */}
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto p-4">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-auto relative">
             {/* Close button */}
             <label
               htmlFor="createChoreModalToggle"
@@ -69,21 +65,21 @@ export default async function ProtectedPage() {
             >
               ✕
             </label>
-
-            {/* CreateChore component */}
-            <CreateChore userId={claimsData.claims.sub} childrenData={data} />
+            <CreateChore
+              userId={claimsData.claims.sub}
+              childrenData={data}
+            />
           </div>
         </div>
       </div>
 
       {/* Children Section */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <h2 className="font-bold text-lg mb-4">Children</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <h2 className="font-bold text-lg">Children</h2>
 
-          {/* Hidden checkbox for AddChild modal */}
+          {/* AddChild Modal */}
           <input type="checkbox" id="addChildModalToggle" className="hidden peer" />
-          {/* Plus icon label triggers modal */}
           <label
             htmlFor="addChildModalToggle"
             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer flex items-center"
@@ -91,24 +87,23 @@ export default async function ProtectedPage() {
             <PlusIcon size={20} />
           </label>
 
-          {/* Modal */}
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 relative">
-              {/* Close button */}
+          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto p-4">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-auto relative">
               <label
                 htmlFor="addChildModalToggle"
                 className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-900 text-xl"
               >
                 ✕
               </label>
-
-              {/* AddChild component */}
               <AddChild userId={claimsData.claims.sub} />
             </div>
           </div>
         </div>
 
-        <Children childrenData={data} />
+        {/* Children cards side by side */}
+        <div className="flex flex-wrap gap-4">
+          <Children childrenData={data} />
+        </div>
       </div>
 
       {/* Approval List */}
