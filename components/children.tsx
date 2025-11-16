@@ -59,8 +59,8 @@ const Children = ({
 
                 <CopyButton
                   //! For local development
-                  content={`localhost:3000/child/${child.access_key}`}
-                  // content={`https://chorebank.vercel.app/child/${child.access_key}`}
+                  // content={`localhost:3000/child/${child.access_key}`}
+                  content={`https://chorebank.vercel.app/child/${child.access_key}`}
                   size="sm"
                 />
               </div>
