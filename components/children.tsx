@@ -36,8 +36,8 @@ const Children = ({
               <p className='text-sm'>Copy Access Link</p>
               <CopyButton
                 //! For local development, uncomment the line below and comment out the vercel.app line
-                // content={`localhost:3000/child/${child.access_key}`}
-                content={`https://chorebank.vercel.app/child/${child.access_key}`}
+                content={`localhost:3000/child/${child.access_key}`}
+                // content={`https://chorebank.vercel.app/child/${child.access_key}`}
                 size='sm'
               />
             </div>
