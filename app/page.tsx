@@ -34,7 +34,7 @@ export default function Home() {
   <div className="flex justify-center gap-4 mt-6 flex-wrap">
     <Link
       href="/auth/sign-up"
-      className="bg-white text-purple-700 dark:bg-purple-500 dark:text-white px-6 py-3 rounded-lg font-semibold shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all"
+      className="bg-white hover:bg-purple-100 rounded-lg border border-purple-600 dark:border-purple-500 text-purple-700 dark:bg-purple-500 dark:text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-white-200 dark:hover:bg-purple-400 transition-colors"
     >
       Get Started
     </Link>

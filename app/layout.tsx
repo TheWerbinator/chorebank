@@ -48,7 +48,7 @@ export default function RootLayout({
                     </Link>
                     <Link
                       href="/auth/login"
-                      className="px-3 py-1 md:px-4 md:py-2 rounded-lg border border-purple-600 dark:border-purple-500 text-purple-600 dark:text-purple-400 font-semibold text-xs md:text-sm hover:bg-purple-100 dark:hover:bg-purple-700 transition-colors"
+                      className="px-3 py-1 md:px-4 md:py-2 rounded-lg border border-purple-600 dark:border-purple-500 text-purple-600 dark:text-purple-400 font-semibold text-xs md:text-sm hover:bg-purple-100 dark:hover:bg-purple-600 dark:hover:text-white transition-colors"
                     >
                       Login
                     </Link>
