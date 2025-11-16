@@ -1,3 +1,5 @@
+'use client';
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -6,6 +8,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { CopyButton } from "./ui/shadcn-io/copy-button";
+import { Eye, EyeOff } from "lucide-react";
 
 const Children = ({
   childrenData,
@@ -20,30 +23,52 @@ const Children = ({
 }) => {
   return (
     <div className='flex flex-wrap gap-2 justify-start'>
-      {childrenData.map((child) => (
-        <Card key={child.id} className='w-full sm:max-w-md'>
-          <CardHeader>
-            <CardTitle>{child.name}</CardTitle>
-            <CardDescription></CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className='text-sm'>Child ID: {child.id}</p>
-            <p className='text-sm'>Unspent Rewards: {child.current_rewards}</p>
-            <p className='text-sm'>
-              Lifetime Earnings: {child.lifetime_rewards}
-            </p>
-            <div className='flex gap-2 items-center w-fit my-2 p-2 rounded-xl border'>
-              <p className='text-sm'>Copy Access Link</p>
-              <CopyButton
-                //! For local development, uncomment the line below and comment out the vercel.app line
-                content={`localhost:3000/child/${child.access_key}`}
-                // content={`https://chorebank.vercel.app/child/${child.access_key}`}
-                size='sm'
-              />
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+      {childrenData.map((child) => {
+        const [showId, setShowId] = useState(false);
+
+        return (
+          <Card key={child.id} className='w-full sm:max-w-md'>
+            <CardHeader>
+              <CardTitle>{child.name}</CardTitle>
+              <CardDescription></CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-2 text-sm">
+                <span>Child ID: {showId ? child.id : "••••••••"}</span>
+                <button
+                  type="button"
+                  onMouseDown={() => setShowId(true)}
+                  onMouseUp={() => setShowId(false)}
+                  onMouseLeave={() => setShowId(false)}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                >
+                  {showId ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+
+              <p className='text-sm'>Unspent Rewards: {child.current_rewards}</p>
+              <p className='text-sm'>
+                Lifetime Earnings: {child.lifetime_rewards}
+              </p>
+
+              <div className='flex gap-2 items-center w-fit my-2 p-2 rounded-xl border'>
+                <p className='text-sm'>Copy Access Link</p>
+
+                <CopyButton
+                  //! For local development, uncomment the line below and comment out the vercel.app line
+                  content={`localhost:3000/child/${child.access_key}`}
+                  // content={`https://chorebank.vercel.app/child/${child.access_key}`}
+                  size='sm'
+                />
+              </div>
+
+              <p className="text-xs italic text-foreground/70 dark:text-foreground-dark/70 mt-1">
+                A child does not need to create an account — they can use this link to automatically get their own dashboard.
+              </p>
+            </CardContent>
+          </Card>
+        );
+      })}
     </div>
   );
 };
