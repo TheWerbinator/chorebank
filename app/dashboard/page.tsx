@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { InfoIcon, MessageCircleWarningIcon, PlusIcon } from "lucide-react";
+
 import CreateChore from "@/components/create-chore";
 import AddChild from "@/components/add-child";
 import Children from "@/components/children";
@@ -51,18 +52,35 @@ export default async function ProtectedPage() {
 
       {/* Children Section */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
           <h2 className="font-bold text-lg mb-4">Children</h2>
 
-          {/* Use <details> as toggle */}
-          <details className="relative">
-            <summary className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer">
-              <PlusIcon size={20} />
-            </summary>
-            <div className="absolute z-50 top-10 right-0 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96">
+          {/* Hidden checkbox to toggle modal */}
+          <input type="checkbox" id="addChildModalToggle" className="hidden peer" />
+
+          {/* Plus icon label triggers modal */}
+          <label
+            htmlFor="addChildModalToggle"
+            className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer flex items-center"
+          >
+            <PlusIcon size={20} />
+          </label>
+
+          {/* Modal */}
+          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 relative">
+              {/* Close button */}
+              <label
+                htmlFor="addChildModalToggle"
+                className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-900 text-xl"
+              >
+                ✕
+              </label>
+
+              {/* AddChild component */}
               <AddChild userId={claimsData.claims.sub} />
             </div>
-          </details>
+          </div>
         </div>
 
         <Children childrenData={data} />
@@ -90,7 +108,6 @@ export default async function ProtectedPage() {
         <h2 className="font-bold text-lg mb-4">Actions</h2>
         <div className="flex flex-wrap gap-4">
           <CreateChore userId={claimsData.claims.sub} childrenData={data} />
-          {/* Removed inline AddChild since it now lives in the toggle */}
         </div>
       </div>
     </div>
