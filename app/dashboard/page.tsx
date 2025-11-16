@@ -2,12 +2,10 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { InfoIcon, MessageCircleWarningIcon, PlusIcon } from "lucide-react";
 
-
 import CreateChore from "@/components/create-chore";
-import CreateChoreModalWrapper from "@/components/ui/chore-modal";
 import AddChild from "@/components/add-child";
 import Children from "@/components/children";
-import ApprovalList from "@/components/approval-list";  
+import ApprovalList from "@/components/approval-list";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -67,8 +65,10 @@ export default async function ProtectedPage() {
             >
               ✕
             </label>
-            <CreateChoreModalWrapper userId={claimsData.claims.sub} childrenData={data} />
-
+            <CreateChore
+              userId={claimsData.claims.sub}
+              childrenData={data}
+            />
           </div>
         </div>
       </div>
@@ -124,6 +124,5 @@ export default async function ProtectedPage() {
       />
     </div>
   );
-
   
 }
