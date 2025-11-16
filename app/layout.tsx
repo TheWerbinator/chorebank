@@ -28,7 +28,7 @@ export default function RootLayout({
         >
           <div className="min-h-screen flex flex-col">
             {/* Navbar */}
-            <nav className="w-full border-b border-gray-300/20 dark:border-gray-700/20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm fixed top-0 z-50">
+            <nav className="w-full border-b border-gray-300/20 dark:border-gray-700/20 bg-gray-100/90 dark:bg-gray-900/90 backdrop-blur-sm fixed top-0 z-50">
                 <div className="max-w-5xl mx-auto flex justify-between items-center h-16 px-4 sm:px-5">
                   {/* Logo / Site Name */}
                   <Link
