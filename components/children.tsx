@@ -22,12 +22,15 @@ const Children = ({
   }[];
 }) => {
   return (
-    <div className='flex flex-wrap gap-2 justify-start'>
+    <div className="flex flex-wrap justify-start gap-4">
       {childrenData.map((child) => {
         const [showId, setShowId] = useState(false);
 
         return (
-          <Card key={child.id} className='w-full sm:max-w-md'>
+          <Card
+            key={child.id}
+             className="flex-shrink-0 w-full sm:w-[45%] lg:w-[30%]"
+          >
             <CardHeader>
               <CardTitle>{child.name}</CardTitle>
               <CardDescription></CardDescription>
@@ -46,19 +49,19 @@ const Children = ({
                 </button>
               </div>
 
-              <p className='text-sm'>Unspent Rewards: {child.current_rewards}</p>
-              <p className='text-sm'>
+              <p className="text-sm">Unspent Rewards: {child.current_rewards}</p>
+              <p className="text-sm">
                 Lifetime Earnings: {child.lifetime_rewards}
               </p>
 
-              <div className='flex gap-2 items-center w-fit my-2 p-2 rounded-xl border'>
-                <p className='text-sm'>Copy Access Link</p>
+              <div className="flex gap-2 items-center w-fit my-2 p-2 rounded-xl border">
+                <p className="text-sm">Copy Access Link</p>
 
                 <CopyButton
-                  //! For local development, uncomment the line below and comment out the vercel.app line
+                  //! For local development
                   content={`localhost:3000/child/${child.access_key}`}
                   // content={`https://chorebank.vercel.app/child/${child.access_key}`}
-                  size='sm'
+                  size="sm"
                 />
               </div>
 

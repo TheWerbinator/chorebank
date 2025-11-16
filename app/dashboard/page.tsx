@@ -101,7 +101,7 @@ export default async function ProtectedPage() {
         </div>
 
         {/* Children cards side by side */}
-        <div className="flex flex-wrap gap-4">
+        <div className="w-full max-w-full mx-auto">
           <Children childrenData={data} />
         </div>
       </div>
