@@ -1,109 +1,157 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# 💰 ChoreBank: Effortless Chore Management for Families
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+**ChoreBank** is a simple, intuitive application designed to help parents manage, assign, and track chores for their children using a digital reward system. Built using the powerful **Next.js** framework and **Supabase** for backend services, ChoreBank focuses on ease of use for parents while providing a secure, no-login dashboard for children.
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+## ✨ Features
 
-## Features
+  * **Parent Dashboard:** Full authentication and control for parents to manage the family's ecosystem.
+  * **Child Management:** Easily add and view child profiles, tracking their rewards and earnings.
+  * **Chore Assignment:** Create new chores with descriptions and reward amounts, and assign them to specific children.
+  * **Approval Queue:** Parents can approve or reject completed chores before rewards are issued.
+  * **Simplified Child Access:** Children access their personal dashboard securely using a unique **Access Key** link, eliminating the need for separate accounts, passwords, or complex sign-up flows.
+  * **Reward Tracking:** Monitor `current_rewards` (unspent earnings) and `lifetime_rewards` for each child.
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
 
-## Demo
+  <img alt="A mother adds a gold coin to a piggy bank while her son cheers in the background." src="https://chorebank.vercel.app/chorebank.png">
+-----
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+## 🛠️ Technology Stack
 
-## Deploy to Vercel
+ChoreBank is built with a modern, scalable stack:
 
-Vercel deployment will guide you through creating a Supabase account and project.
+| Technology | Description | Resource Link |
+| :--- | :--- | :--- |
+| **Next.js** | React framework for production, enabling server-side rendering (SSR) and routing. | [Next.js Documentation](https://nextjs.org/docs) |
+| **TypeScript** | Adds static type checking to JavaScript, improving code quality and maintainability. | [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) |
+| **Supabase** | Open Source Firebase alternative providing Database, Authentication, and Edge Functions. | [Supabase Documentation](https://supabase.com/docs) |
+| **Tailwind CSS** | A utility-first CSS framework for rapidly building custom designs. | [Tailwind CSS Docs](https://tailwindcss.com/docs) |
+| **React Hook Form / Zod** | Used for form management and schema validation. | [React Hook Form](https://react-hook-form.com/) |
+| **shadcn** | All-purpose component library for quick development | [shadcn](https://https://ui.shadcn.com/) |
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+-----
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+## 🚀 Getting Started
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+Follow these instructions to set up the project locally.
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+### Prerequisites
 
-## Clone and run locally
+You must have **Node.js** and **npm** (or yarn/pnpm) installed.
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+### 1\. Installation
 
-2. Create a Next.js app using the Supabase Starter template npx command
+Clone the repository and install the dependencies:
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+```bash
+# Clone the repository
+git clone [YOUR_REPO_URL] chorebank
+cd chorebank
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+# Install dependencies using npm
+npm install
+```
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+### 2\. Configure Supabase
 
-3. Use `cd` to change into the app's directory
+1.  **Create a New Supabase Project:** Sign up or log in to [Supabase](https://supabase.com/).
 
-   ```bash
-   cd with-supabase-app
-   ```
+2.  **Get Environment Variables:** Navigate to **Project Settings** \> **API**. You will need the **Project URL**, **Service Role Key**, and the **Publishable Key**.
 
-4. Rename `.env.example` to `.env.local` and update the following:
+3.  **Create `.env.local`:** In the root of your project directory, create a file named `.env.local` and add the following variables:
 
-  ```env
-  NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=[INSERT SUPABASE PROJECT API PUBLISHABLE OR ANON KEY]
-  ```
-  > [!NOTE]
-  > This example uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which refers to Supabase's new **publishable** key format.
-  > Both legacy **anon** keys and new **publishable** keys can be used with this variable name during the transition period. Supabase's dashboard may show `NEXT_PUBLIC_SUPABASE_ANON_KEY`; its value can be used in this example.
-  > See the [full announcement](https://github.com/orgs/supabase/discussions/29260) for more information.
+    ```bash
+    # Supabase Credentials
+    SUPABASE_SERVICE_ROLE_KEY="[YOUR_SUPABASE_SERVICE_ROLE_KEY]"
+    NEXT_PUBLIC_SUPABASE_URL="[YOUR_SUPABASE_URL]"
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="[YOUR_SUPABASE_PUBLISHABLE_KEY]"
+    ```
 
-  Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
+4.  **Set up Database Schema:** You must set up the `children` and `chores` tables, and implement **Row Level Security (RLS)** policies to ensure data is secure and users can only access their own family's data.
 
-5. You can now run the Next.js local development server:
+### 3\. Development Commands
 
-   ```bash
-   npm run dev
-   ```
+Use the following commands to run or build the application:
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+| Command | Action |
+| :--- | :--- |
+| `npm run dev` | Starts the Next.js development server. The app will be available at `http://localhost:3000`. |
+| `npm run build` | Compiles the production build of the Next.js application. |
+| `npm start` | Starts the Next.js server in production mode (must run `npm run build` first). |
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+-----
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+## 👨‍👩‍👧‍👦 Application Data Flow
 
-## Feedback and issues
+ChoreBank relies on a three-tier data model:
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+### 1\. Parents (Authenticated Users)
 
-## More Supabase examples
+  * Parents are the primary users who manage the application.
+  * **Authentication:** They use standard Supabase user authentication (sign up/login).
+  * **Data Creation:** They create and own the `children` and `chores` data.
+  * **Permissions:** RLS policies in Supabase ensure that a parent can only view/modify the data associated with their unique `user_id`.
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+### 2\. Children (Data Objects)
+
+  * Children are database records (`children` table) linked to a parent's `user_id`.
+  * They track rewards and display assigned/completed chores.
+  * **No Authentication:** Children do not have accounts or passwords.
+
+    Supabase `children` table includes the `name`, `parent` (user auth foreign key), `lifetime_rewards`, `current_rewards`, and `access_key` (generated uuid) columns.
+
+### 3\. Chores (Data Objects)
+
+  * Chores are database records (`chores` table) linked to a parent's `user_id` and a child's `id`.
+  * They carry a reward value and display titles and descriptions for the chore to be completed.
+
+    Supabase `chores` table includes the `title`, `description`, `reward`, `parent` (user auth foreign key), `assigned_child` (child foreign key), and `status` (enum of 'chore status' - either `assigned`, `pending_approval`, `rejected`, or `complete` ) columns.
+
+-----
+
+### Supabase RPC Function
+The last thing you'll need to know is our super cool RPC function that runs the following SQL query - `increment_child_reward` - when called with the 'approveChore' parent action - 
+```bash
+DECLARE
+  parent_id_check uuid;
+  caller_uid uuid := auth.uid(); -- Get the caller's ID
+BEGIN
+  RAISE NOTICE '--- Increment Reward Function Start ---';
+  RAISE NOTICE 'Child ID to reward: %', child_id_to_reward;
+  RAISE NOTICE 'Amount to add: %', amount_to_add;
+  RAISE NOTICE 'Caller (Parent) UID: %', caller_uid;
+
+  -- 1. Find the parent of the child
+  SELECT parent INTO parent_id_check
+  FROM public.children
+  WHERE id = child_id_to_reward;
+
+  RAISE NOTICE 'Found Parent ID in table: %', parent_id_check;
+
+  -- 2. Check if the logged-in user is that parent
+  IF caller_uid = parent_id_check THEN
+    RAISE NOTICE 'CHECK SUCCEEDED: Caller is the parent. Updating rewards...';
+    -- 3. If yes, perform the atomic increment
+    UPDATE public.children
+    SET
+      current_rewards = current_rewards + amount_to_add,
+      lifetime_rewards = lifetime_rewards + amount_to_add
+    WHERE id = child_id_to_reward;
+    RAISE NOTICE 'Update complete.';
+  ELSE
+    -- 4. If no, raise an error or just log
+    RAISE NOTICE 'CHECK FAILED: Caller is not the parent or parent is NULL.';
+    RAISE EXCEPTION 'Unauthorized: You are not the parent of this child (or parent ID is NULL).';
+  END IF;
+  
+  RAISE NOTICE '--- Increment Reward Function End ---';
+END;
+
+```
+
+This allows the increment of current and lifetime child rewards to be done without three fetch requests.
+
+-----
+
+## 🤝 Contributing
+
+Contributions are welcome\! Please feel free to open an [issue](https://github.com/TheWerbinator/chore-bank/issues) or submit a [pull request](https://github.com/TheWerbinator/chore-bank/pulls) if you have suggestions for features, bug fixes, or improvements to the codebase.
