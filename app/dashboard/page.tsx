@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { InfoIcon, MessageCircleWarningIcon, PlusIcon } from "lucide-react";
+import { MessageCircleWarningIcon, PlusIcon } from "lucide-react";
 
 import CreateChore from "@/components/create-chore";
 import AddChild from "@/components/add-child";
@@ -26,9 +26,9 @@ export default async function ProtectedPage() {
   if (childrenError || pendingChoresError) {
     console.error("Error fetching children:", childrenError);
     return (
-      <div className="w-full flex flex-col gap-12">
-        <div className="w-full">
-          <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
+      <div className='w-full flex flex-col gap-12'>
+        <div className='w-full'>
+          <div className='bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center'>
             <MessageCircleWarningIcon size={16} strokeWidth={2} />
             There has been an error fetching your children data. Please try
             again later or contact support.
@@ -39,59 +39,66 @@ export default async function ProtectedPage() {
   }
 
   return (
-    <div className="w-11/12 md:w-3/4 flex flex-col mx-auto gap-12">
+    <div className='w-full md:w-3/4 flex flex-col mx-auto gap-12'>
       {/* Info + Create Chore */}
-      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center flex-1">
-          <InfoIcon size={16} strokeWidth={2} />
-          This is a protected page that you can only see as an authenticated user
+      <div className='w-full flex flex-col md:flex-row items-center justify-between gap-4'>
+        <div className='bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center flex-1'>
+          {/* <InfoIcon size={16} strokeWidth={2} /> */}
+          Welcome to your dashboard! Here you can manage your children&apos;s
+          chores and rewards. Use the &quot;Create Chore&quot; button to assign
+          new tasks to your children.
         </div>
 
         {/* CreateChore Modal */}
-        <input type="checkbox" id="createChoreModalToggle" className="hidden peer" />
+        <input
+          type='checkbox'
+          id='createChoreModalToggle'
+          className='hidden peer'
+        />
         <label
-          htmlFor="createChoreModalToggle"
-          className="bg-purple-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-600 transition"
+          htmlFor='createChoreModalToggle'
+          className='bg-purple-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-600 transition'
         >
           Create Chore
         </label>
 
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto p-4">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-auto relative">
+        <div className='fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto p-4 scroll-m-4'>
+          <div className='bg-white dark:bg-card dark:border p-6 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-auto relative'>
             {/* Close button */}
             <label
-              htmlFor="createChoreModalToggle"
-              className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-900 text-xl"
+              htmlFor='createChoreModalToggle'
+              className='absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-900 text-xl'
             >
               ✕
             </label>
-            <CreateChore
-              userId={claimsData.claims.sub}
-              childrenData={data}
-            />
+            <CreateChore userId={claimsData.claims.sub} childrenData={data} />
           </div>
         </div>
       </div>
 
       {/* Children Section */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2 mb-4">
-          <h2 className="font-bold text-lg">Children</h2>
+      <div className='flex flex-col gap-2'>
+        <div className='flex items-center gap-2 mb-4'>
+          <h2 className='font-bold text-lg'>Children</h2>
 
           {/* AddChild Modal */}
-          <input type="checkbox" id="addChildModalToggle" className="hidden peer" />
+          <input
+            type='checkbox'
+            id='addChildModalToggle'
+            className='hidden peer'
+          />
           <label
-            htmlFor="addChildModalToggle"
-            className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer flex items-center"
+            htmlFor='addChildModalToggle'
+            className='p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer flex items-center'
           >
             <PlusIcon size={20} />
           </label>
 
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto p-4">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-auto relative">
+          <div className='fixed inset-0 flex items-center justify-center bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked:opacity-100 peer-checked:pointer-events-auto p-4'>
+            <div className='bg-white dark:bg-card dark:border p-6 rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-auto relative'>
               <label
-                htmlFor="addChildModalToggle"
-                className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-900 text-xl"
+                htmlFor='addChildModalToggle'
+                className='absolute top-2 right-3 cursor-pointer text-gray-500 hover:text-gray-900 text-xl'
               >
                 ✕
               </label>
@@ -101,7 +108,7 @@ export default async function ProtectedPage() {
         </div>
 
         {/* Children cards side by side */}
-        <div className="w-full max-w-full mx-auto">
+        <div className='w-full max-w-full mx-auto'>
           <Children childrenData={data} />
         </div>
       </div>
@@ -124,5 +131,4 @@ export default async function ProtectedPage() {
       />
     </div>
   );
-  
 }

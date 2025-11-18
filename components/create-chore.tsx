@@ -51,8 +51,6 @@ const formSchema = z.object({
   child: z.string(),
 });
 
-
-
 const CreateChore = ({
   userId,
   childrenData,
@@ -72,53 +70,59 @@ const CreateChore = ({
     },
   });
 
-const onSubmit = async (data: z.infer<typeof formSchema>) => {
-  setLoading(true);
-  const { data: supabaseData, error } = await supabase
-    .from("chores")
-    .insert({
-      title: data.title,
-      description: data.description,
-      reward: data.reward,
-      assigned_child: data.child,
-      parent: userId,
-    })
-    .select();
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setLoading(true);
+    const { data: supabaseData, error } = await supabase
+      .from("chores")
+      .insert({
+        title: data.title,
+        description: data.description,
+        reward: data.reward,
+        assigned_child: data.child,
+        parent: userId,
+      })
+      .select();
 
-  if (error) {
-    console.error(supabaseData, error);
-    toast("Failed to create child", {
-      description: error.message,
+    if (error) {
+      console.error(supabaseData, error);
+      toast("Failed to create child", {
+        description: error.message,
+        position: "bottom-right",
+        classNames: { content: "flex flex-col gap-2" },
+        style: {
+          "--border-radius": "calc(var(--radius) + 4px)",
+        } as React.CSSProperties,
+      });
+      setLoading(false);
+      return; // modal stays open on error
+    }
+
+    toast("You submitted the following values:", {
+      description: (
+        <pre className='bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4'>
+          <code>{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
       position: "bottom-right",
       classNames: { content: "flex flex-col gap-2" },
-      style: { "--border-radius": "calc(var(--radius) + 4px)" } as React.CSSProperties,
+      style: {
+        "--border-radius": "calc(var(--radius) + 4px)",
+      } as React.CSSProperties,
     });
+
+    // Close the modal after successful submit
+    const modalToggle = document.getElementById(
+      "createChoreModalToggle"
+    ) as HTMLInputElement | null;
+    if (modalToggle) modalToggle.checked = false;
+
+    form.reset();
     setLoading(false);
-    return; // modal stays open on error
-  }
-
-  toast("You submitted the following values:", {
-    description: (
-      <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-        <code>{JSON.stringify(data, null, 2)}</code>
-      </pre>
-    ),
-    position: "bottom-right",
-    classNames: { content: "flex flex-col gap-2" },
-    style: { "--border-radius": "calc(var(--radius) + 4px)" } as React.CSSProperties,
-  });
-
-  // Close the modal after successful submit
-  const modalToggle = document.getElementById("createChoreModalToggle") as HTMLInputElement | null;
-  if (modalToggle) modalToggle.checked = false;
-
-  form.reset();
-  setLoading(false);
-};
+  };
 
   return (
     <div className='max-w-4xl'>
-      <Card className='w-full sm:max-w-md'>
+      <Card className='w-full sm:max-w-md shadow-none border-none'>
         <CardHeader>
           <CardTitle>Create A Chore</CardTitle>
           <CardDescription>
