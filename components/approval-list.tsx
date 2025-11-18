@@ -2,15 +2,9 @@
 "use client";
 
 import { useTransition } from "react";
-import { approveChore, rejectChore } from "@/lib/parent_actions"; // Import the actions
+import { approveChore, rejectChore } from "@/lib/parent_actions";
 import { InfoIcon } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const ApprovalList = ({
@@ -21,7 +15,6 @@ const ApprovalList = ({
   chores: {
     id: string;
     title: string;
-    description: string;
     assigned_child: { name: string } | string;
   }[];
 }) => {
@@ -41,11 +34,11 @@ const ApprovalList = ({
 
   if (chores.length === 0) {
     return (
-      <div className='flex flex-col'>
-        <h2 className='font-bold text-lg'>Approval List</h2>
+      <div className='flex flex-col w-full'>
+        <h2 className='font-bold text-lg mb-2'>Approval List</h2>
         <div className='w-fit'>
           <div className='bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center'>
-            <InfoIcon size='16' strokeWidth={2} />
+            <InfoIcon size={16} strokeWidth={2} />
             There are no chores to approve at the moment.
           </div>
         </div>
@@ -54,38 +47,37 @@ const ApprovalList = ({
   }
 
   return (
-    <div className='flex flex-col gap-4'>
-      <h2 className='font-bold text-lg'>Approval List</h2>
+    <div className='flex flex-wrap gap-4 w-full'>
+      <h2 className='w-full font-bold text-lg mb-2'>Approval List</h2>
       {chores.map((chore) => (
-        <Card key={chore.id} className='w-fit'>
+        <Card
+          key={chore.id}
+          className='flex-1 min-w-[200px] sm:max-w-[30%] md:max-w-[22%]'
+        >
           <CardHeader>
-            <CardTitle>{chore.title}</CardTitle>
-            <CardDescription>
-              (
+            <CardTitle className='text-sm'>{chore.title}</CardTitle>
+            <p className='text-xs text-gray-500'>
               {typeof chore.assigned_child === "string"
                 ? chore.assigned_child
                 : chore.assigned_child.name}
-              )
-            </CardDescription>
+            </p>
           </CardHeader>
-          <CardContent>
-            <p className='mb-4'>{chore.description}</p>
-            <div className='flex gap-4'>
-              <Button
-                variant={"outline"}
-                onClick={() => onApprove(chore.id, userId)}
-                disabled={isPending}
-              >
-                {isPending ? "..." : "Approve"}
-              </Button>
-              <Button
-                variant={"destructive"}
-                onClick={() => onReject(chore.id, userId)}
-                disabled={isPending}
-              >
-                {isPending ? "..." : "Reject"}
-              </Button>
-            </div>
+          <CardContent className='flex justify-between gap-2'>
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={() => onApprove(chore.id, userId)}
+              disabled={isPending}
+            >
+              {isPending ? "..." : "Approve"}
+            </Button>
+            <Button
+              size='sm'
+              onClick={() => onReject(chore.id, userId)}
+              disabled={isPending}
+            >
+              {isPending ? "..." : "Reject"}
+            </Button>
           </CardContent>
         </Card>
       ))}

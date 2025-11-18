@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +23,6 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { refresh } from "next/cache";
 
 const formSchema = z.object({
   childName: z
@@ -32,6 +32,7 @@ const formSchema = z.object({
 });
 
 const AddChild = ({ userId }: { userId: string }) => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const supabase = createClient();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,11 +79,12 @@ const AddChild = ({ userId }: { userId: string }) => {
         "--border-radius": "calc(var(--radius)  + 4px)",
       } as React.CSSProperties,
     });
+    router.replace("/dashboard");
+    router.refresh();
     setLoading(false);
-    refresh();
   };
   return (
-    <Card className='w-full h-fit sm:max-w-md '>
+    <Card className='w-full h-fit sm:max-w-md shadow-none border-none'>
       <CardHeader>
         <CardTitle>Add Your Child</CardTitle>
         <CardDescription>Think of all the chores they can do!</CardDescription>

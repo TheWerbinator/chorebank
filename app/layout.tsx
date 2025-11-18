@@ -1,25 +1,40 @@
-import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist } from "next/font/google"; // Keep font
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://chorebank.vercel.app"),
-  title: "Easy Chore Tracker for Parents and Kids | ChoreBank",
-  description:
-    "Simplify family chores and rewards with ChoreBank. Parents can easily assign tasks and kids can earn rewards, making household management fun and engaging for everyone.",
-};
+import NavBar from "@/components/navbar";
+import { Metadata } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   display: "swap",
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  title: "ChoreBank - Make Chores Fun & Rewarding",
+  description:
+    "Track chores, assign rewards, and help your family stay organized — all in one easy-to-use app.",
+  openGraph: {
+    title: "ChoreBank - Make Chores Fun & Rewarding",
+    description:
+      "Track chores, assign rewards, and help your family stay organized — all in one easy-to-use app.",
+    images: [
+      {
+        url: "../opengraph-image.png",
+        alt: "A mother adds a gold coin to a piggy bank while her son cheers in the background.",
+      },
+    ],
+    url: "https://www.chorebank.vercel.app",
+    type: "website",
+    siteName: "ChoreBank",
+  },
+  other: { pinterest: "nopin" },
+  metadataBase: new URL("https://www.chorebank.vercel.app"),
+  alternates: {
+    canonical: "https://www.chorebank.vercel.app",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -28,50 +43,49 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+      <body
+        className={`${geistSans.className} antialiased bg-background text-foreground transition-colors duration-300`}
+      >
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
           enableSystem
           disableTransitionOnChange
         >
-          <main className='min-h-screen flex flex-col items-center'>
-            <div className='flex-1 w-full flex flex-col gap-20 items-center'>
-              <nav className='w-full flex justify-center border-b border-b-foreground/10 h-16'>
-                <div className='w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm'>
-                  <div className='flex gap-5 items-center font-semibold'>
-                    <Link href={"/"}>ChoreBank</Link>
-                  </div>
-                  {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
-                </div>
-              </nav>
+          <div className='min-h-screen flex flex-col'>
+            <NavBar />
+            {/* Main content */}
+            <main className='flex-1 w-full max-w-5xl mx-auto pt-20 px-5 flex flex-col gap-16'>
               {children}
+            </main>
 
-              <footer className='w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16'>
-                <p>
-                  Project by{" "}
+            {/* Footer */}
+            <footer className='w-full border-t border-border/20 mt-auto bg-background/90 backdrop-blur-sm'>
+              <div className='max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center py-10 px-5 gap-4 text-sm text-foreground/80'>
+                <p className='text-center md:text-left'>
+                  &copy; {new Date().getFullYear()} ChoreBank — built by{" "}
                   <a
                     href='https://www.linkedin.com/in/connorspendlove/'
                     target='_blank'
-                    className='font-bold hover:underline'
                     rel='noreferrer'
+                    className='font-bold hover:underline'
                   >
                     Connor Spendlove
                   </a>{" "}
-                  and{" "}
+                  &{" "}
                   <a
                     href='https://www.linkedin.com/in/shawn-werber/'
                     target='_blank'
-                    className='font-bold hover:underline'
                     rel='noreferrer'
+                    className='font-bold hover:underline'
                   >
                     Shawn Werber
                   </a>
                 </p>
                 <ThemeSwitcher />
-              </footer>
-            </div>
-          </main>
+              </div>
+            </footer>
+          </div>
         </ThemeProvider>
       </body>
     </html>
