@@ -16,7 +16,8 @@ export default async function ProtectedPage() {
 
   const { data, error: childrenError } = await supabase
     .from("children")
-    .select("id, name, current_rewards, lifetime_rewards, access_key");
+    .select("id, name, current_rewards, lifetime_rewards, access_key")
+    .eq("parent", claimsData.claims.sub);
 
   const { data: pendingChores, error: pendingChoresError } = await supabase
     .from("chores")
