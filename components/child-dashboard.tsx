@@ -44,15 +44,31 @@ const ChildDashboardClient = ({
 
   const handleCompleteChore = async (choreId: string) => {
     setIsLoading(true);
-    await fetch("/api/child/complete-chore", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        access_key: access_key,
-        chore_id: choreId,
-      }),
-    });
-    window.location.reload();
+    try {
+      const response = await fetch("/api/child/complete-chore", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          access_key: access_key,
+          chore_id: choreId,
+          child_id: child.id,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.error || `HTTP error! Status: ${response.status}`
+        );
+      }
+      window.location.reload();
+    } catch (error) {
+      console.error("Error completing chore:", error);
+      setIsLoading(false);
+      return;
+    }
   };
 
   const toggleDescription = (choreId: string) => {
@@ -63,7 +79,7 @@ const ChildDashboardClient = ({
     );
   };
 
-  const renderChoreCard = (chore: typeof choresToDo[0]) => {
+  const renderChoreCard = (chore: (typeof choresToDo)[0]) => {
     const isExpanded = expandedChores.includes(chore.id);
     const shouldTruncate = chore.description.length > 50 && !isExpanded;
     const displayedDescription = shouldTruncate
@@ -71,26 +87,25 @@ const ChildDashboardClient = ({
       : chore.description;
 
     return (
-      <Card key={chore.id} className="w-full p-4">
+      <Card key={chore.id} className='w-full p-4'>
         <CardHeader>
           <CardTitle>{chore.title}</CardTitle>
-          <CardDescription className="break-words whitespace-pre-wrap">
-              {displayedDescription}
-              {chore.description.length > 50 && (
-                <Button
-                  variant="link"
-                  size="sm"
-                  className="ml-1 p-0"
-                  onClick={() => toggleDescription(chore.id)}
-                >
-                  {isExpanded ? "Show less" : "See full description"}
-                </Button>
-              )}
-            </CardDescription>
-
+          <CardDescription className='break-words whitespace-pre-wrap'>
+            {displayedDescription}
+            {chore.description.length > 50 && (
+              <Button
+                variant='link'
+                size='sm'
+                className='ml-1 p-0'
+                onClick={() => toggleDescription(chore.id)}
+              >
+                {isExpanded ? "Show less" : "See full description"}
+              </Button>
+            )}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-md">Reward: ${chore.reward}</p>
+          <p className='text-md'>Reward: ${chore.reward}</p>
           {choresToDo.find((c) => c.id === chore.id) && (
             <Button
               onClick={() => handleCompleteChore(chore.id)}
@@ -105,37 +120,37 @@ const ChildDashboardClient = ({
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 my-8">
-      <h1 className="font-bold text-xl mb-4">Hi, {child.name}!</h1>
-      <div className="flex justify-start gap-8 mb-4">
+    <div className='w-full flex flex-col gap-4 my-8'>
+      <h1 className='font-bold text-xl mb-4'>Hi, {child.name}!</h1>
+      <div className='flex justify-start gap-8 mb-4'>
         <p>Lifetime Awards Earned: ${child.lifetime_rewards}</p>
         <p>Awards Balance: ${child.current_rewards}</p>
       </div>
-      <h2 className="font-bold text-md">Chores To Do:</h2>
+      <h2 className='font-bold text-md'>Chores To Do:</h2>
 
       {choresToDo.length === 0 ? (
-        <div className="w-full">
-          <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
+        <div className='w-full'>
+          <div className='bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center'>
             <InfoIcon size={16} strokeWidth={2} />
             There are no chores to do at the moment.
           </div>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-4">
+        <div className='flex flex-wrap gap-4'>
           {choresToDo.map(renderChoreCard)}
         </div>
       )}
 
-      <h3 className="font-bold text-md">Chores Pending Approval:</h3>
+      <h3 className='font-bold text-md'>Chores Pending Approval:</h3>
       {choresPending.length === 0 ? (
-        <div className="w-full">
-          <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
+        <div className='w-full'>
+          <div className='bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center'>
             <InfoIcon size={16} strokeWidth={2} />
             There are no chores pending approval at the moment.
           </div>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-4">
+        <div className='flex flex-wrap gap-4'>
           {choresPending.map(renderChoreCard)}
         </div>
       )}

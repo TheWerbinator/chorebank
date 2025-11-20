@@ -15,22 +15,19 @@ export async function POST(req: Request) {
     );
   }
 
-  const { access_key, chore_id } = await req.json();
+  const { access_key, chore_id, child_id } = await req.json();
 
-  const { data: child } = await serviceClient
-    .from("children")
-    .select("id, lifetime_rewards, current_rewards")
-    .eq("access_key", access_key)
-    .single();
-
-  if (!child) {
-    return NextResponse.json({ error: "Invalid access key" }, { status: 401 });
+  if (!access_key || !chore_id || !child_id) {
+    return NextResponse.json(
+      { error: "Access key, chore ID, and child ID are required" },
+      { status: 400 }
+    );
   }
 
   const { error } = await serviceClient
     .from("chores")
     .update({ status: "pending_approval" })
-    .match({ id: chore_id, assigned_child: child.id })
+    .match({ id: chore_id, assigned_child: child_id })
     .in("status", ["assigned", "rejected"]);
 
   if (error) {
