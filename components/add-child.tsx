@@ -43,17 +43,24 @@ const AddChild = ({ userId }: { userId: string }) => {
   });
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
-    const { data: supabaseData, error } = await supabase
-      .from("children")
-      .insert({
-        name: data.childName,
-        parent: userId,
-      })
-      .select();
-    if (error) {
-      console.error(supabaseData, error);
+    try {
+      const { data: supabaseData, error } = await supabase
+        .from("children")
+        .insert({
+          name: data.childName,
+          parent: userId,
+        })
+        .select();
+
+      if (!supabaseData || error) {
+        console.error(supabaseData, error);
+        throw new Error(error?.message || "Failed to create child");
+      }
+
+      window.location.reload();
+    } catch (error) {
       toast("Failed to create child", {
-        description: error.message,
+        description: error instanceof Error ? error.message : String(error),
         position: "bottom-right",
         classNames: {
           content: "flex flex-col gap-2",
@@ -65,6 +72,7 @@ const AddChild = ({ userId }: { userId: string }) => {
       setLoading(false);
       return;
     }
+
     toast("You submitted the following values:", {
       description: (
         <pre className='bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4'>
