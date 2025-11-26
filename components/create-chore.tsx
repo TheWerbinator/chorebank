@@ -85,7 +85,7 @@ const CreateChore = ({
 
     if (error) {
       console.error(supabaseData, error);
-      toast("Failed to create child", {
+      toast("Failed to create chore", {
         description: error.message,
         position: "bottom-right",
         classNames: { content: "flex flex-col gap-2" },
